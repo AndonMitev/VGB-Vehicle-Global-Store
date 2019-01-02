@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const carConfig = require('../utils/carModelConfiguration');
+const carConfig = require('./modelConfigs/propsSchemaConfig/carModelConfiguration');
 
 const CarSchema = new mongoose.Schema({
   brand: {
@@ -95,6 +95,18 @@ const CarSchema = new mongoose.Schema({
     type: String,
     enum: [...carConfig.color.validColors]
   },
+  country: {
+    type: String,
+    required: [true, carConfig.country.requiredErrorMsg],
+    minlength: [
+      carConfig.country.minLength,
+      carConfig.country.minLengthErrorMsg
+    ],
+    maxlength: [
+      carConfig.country.maxlength,
+      carConfig.country.maxLengthErrorMsg
+    ]
+  },
   region: {
     type: String,
     required: [true, carConfig.region.requiredErrorMsg],
@@ -103,20 +115,20 @@ const CarSchema = new mongoose.Schema({
       carConfig.region.minLengthErrorMsg
     ],
     maxlength: [
-      carConfig.region.maxLength,
+      carConfig.region.maxlength,
       carConfig.region.maxLengthErrorMsg
     ]
   },
-  populatedPlace: {
+  city: {
     type: String,
-    required: [true, carConfig.populatedPlace.requiredErrorMsg],
+    required: [true, carConfig.city.requiredErrorMsg],
     minlength: [
-      carConfig.populatedPlace.minLength,
-      carConfig.populatedPlace.minLengthErrorMsg
+      carConfig.city.minLength,
+      carConfig.city.minLengthErrorMsg
     ],
     maxlength: [
-      carConfig.populatedPlace.maxLength,
-      carConfig.populatedPlace.maxLengthErrorMsg
+      carConfig.city.maxlength,
+      carConfig.city.maxLengthErrorMsg
     ]
   },
   safety: {

@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const userConfiguration = require('../utils/userModelConfiguration');
+const userConfiguration =
+  require('./modelConfigs/propsSchemaConfig/userModelConfiguration');
 
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    validate: userConfiguration.username.pattern,
+    validate: [
+      userConfiguration.username.pattern,
+      userConfiguration.username.patternErrorMsg
+    ],
     required: [true, userConfiguration.username.requiredErrorMsg],
     unique: [true, userConfiguration.username.uniqueErrorMsg],
     minlength: [
@@ -28,7 +32,10 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    validate: userConfiguration.password.pattern,
+    validate: [
+      userConfiguration.password.pattern,
+      userConfiguration.password.patternErrorMsg
+    ],
     required: [true, userConfiguration.password.requiredErrorMsg],
     minlength: [
       userConfiguration.password.minLength,
@@ -85,6 +92,7 @@ const UserSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
 
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
