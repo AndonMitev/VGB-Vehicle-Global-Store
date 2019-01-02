@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const carConfig = require('./modelConfigs/propsSchemaConfig/carModelConfiguration');
+const schema = mongoose.Schema;
 
 const CarSchema = new mongoose.Schema({
   brand: {
@@ -89,7 +90,7 @@ const CarSchema = new mongoose.Schema({
   },
   mileage: {
     type: Number,
-    required: [true, carConfig.mileage.required]
+    required: [true, carConfig.mileage.required],
   },
   color: {
     type: String,
@@ -158,6 +159,15 @@ const CarSchema = new mongoose.Schema({
   specialized: {
     type: [String],
     enum: [...carConfig.specialized.validSpecializedTypes]
+  },
+  createdBy: {
+    type: schema.Types.ObjectId,
+    ref: 'User',
+    required: [true]
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 

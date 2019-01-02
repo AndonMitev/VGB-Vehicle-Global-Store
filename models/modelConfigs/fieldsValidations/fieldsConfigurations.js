@@ -21,9 +21,11 @@ const existingUsername = username =>
   `Username: "${username}" is already taken`;
 const existingEmail = email =>
   `Email: "${email}" is already taken`;
-const validUsernameRequirement = 
+const validUsernameRequirement =
   `Username needs to be between 3 and 15 symbols, and need to start with uppercase char, need to include 1 lower case and 1 digit`;
 const validPasswordRequirment = `Password need to have: Minimum eight characters, at least one uppercase letter, one lowercase letter and one numbe`
+const numberInterval = (field, minValue, maxValue) =>
+  `Enter valid ${field}. ${field} must be between ${minValue} and ${maxValue}`;
 
 
 module.exports = {
@@ -41,5 +43,6 @@ module.exports = {
   existingUsername,
   existingEmail,
   validUsernameRequirement,
-  validPasswordRequirment
+  validPasswordRequirment,
+  numberInterval
 }

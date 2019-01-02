@@ -101,7 +101,7 @@ module.exports = {
   },
   currency: {
     requiredErrormsg: fieldsConfigs.requiredErrorMsg(fields.currency.fieldName),
-    default: fields.currency.default
+    default: fields.currency.default,
   },
   monthOfManufacture: {
     requiredErrorMsg: fieldsConfigs
@@ -128,7 +128,7 @@ module.exports = {
     ).maxAllowedYear
   },
   mileage: {
-    required: fieldsConfigs.requiredErrorMsg(fields.milleage.fieldName)
+    required: fieldsConfigs.requiredErrorMsg(fields.mileage.fieldName)
   },
   color: {
     validColors: [...fields.color.validColorTypes]

@@ -1,5 +1,8 @@
 const commonFieldsModel = require('../commonPropsBetweenModels/commonPropsFields');
 const fieldsConfigs = require('../fieldsValidations/fieldsConfigurations');
+const carProps = require('./carProps');
+
+
 
 module.exports = {
   brand: {
@@ -19,10 +22,11 @@ module.exports = {
   },
   engine: {
     fieldName: 'Engine',
-    engineValidTypes: ['Gasoline', 'Diesel', 'Electric', 'Hybrid']
+    engineValidTypes: [...carProps.engineTypes]
   },
   condition: {
-    conditionValidTypes: ['New', 'Used', 'For parts']
+    fieldName: 'Condition',
+    conditionValidTypes: [...carProps.conditionTypes]
   },
   horsePower: {
     fieldName: 'Horse Powers',
@@ -30,15 +34,16 @@ module.exports = {
     maxValue: fieldsConfigs.maxNumberValue(200),
   },
   euroStandarts: {
-    euroStandartsValidTypes: ['Euro 1', 'Euro 2', 'Euro 3', 'Euro 4', 'Euro 5', 'Euro 6']
+    fieldName: 'Euro Standart',
+    euroStandartsValidTypes: [...carProps.euroStandartsTypes]
   },
   transmission: {
     fieldName: 'Transmission',
-    transmissionValidTypes: ['Manual', 'Automatic', 'Semi-automatic']
+    transmissionValidTypes: [...carProps.transmissionTypes]
   },
   category: {
     fieldName: 'Category',
-    categoryValidTypes: ['Van', 'Jeep', 'Combi', 'Coupe', 'Minivan', 'Pickup', 'Sedan', 'Stretch-limousine', 'Hatchback']
+    categoryValidTypes: [...carProps.categoryTypes]
   },
   price: {
     fieldName: 'Price',
@@ -47,43 +52,53 @@ module.exports = {
   },
   currency: {
     fieldName: 'Currency',
-    default: 'USD'
+    default: 'USD',
+    validCurrencyTypes: ['USD']
   },
   monthOfManufacture: {
     fieldName: 'Month',
-    monthOfManufactureValidTypes: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    monthOfManufactureValidTypes: [...carProps.monthTypes]
   },
   yearOfManufacture: {
     fieldName: 'Year',
     minAllowedYear: fieldsConfigs.minNumberValue(1930),
     maxAllowedYear: fieldsConfigs.maxNumberValue(2019)
   },
-  milleage: {
-    fieldName: 'Milleage'
+  mileage: {
+    fieldName: 'Mileage',
+    minMileage: fieldsConfigs.minNumberValue(0)
   },
   color: {
-    validColorTypes: ['dark-blue', 'banana', 'beata', 'beige', 'burgundy', 'bronze', 'white', 'wine', 'violet', 'cherry', 'graphite', 'yellow', 'green', 'golden', 'brown', 'ceramid', 'creamy', 'purple', 'metallic', 'orange', 'ocher', 'ash', 'pearl', 'sandstone', 'pink', 'sahara', 'light gray', 'light blue', 'gray', 'blue', 'ivory', 'silver', 'dark green', 'dark gray', 'dark red', 'tobacco', 'chameleon', 'red', 'black']
+    fieldName: 'Color',
+    validColorTypes: [...carProps.colorTypes]
   },
   ...commonFieldsModel,
   safety: {
-    validSafetyTypes: ['GPS', 'Automatic Stability Control', 'Adaptive headlights', 'Anti-blocking system', 'Airbags rear', 'Airbags front', 'Airbags sideways', 'Electric brake force distribution', 'Electronic stabilizaton program', 'Tire pressure control', 'Parrotron', 'ISOFIX system', 'Stability system', 'Anti-burglary protection system', 'Padding system for drying', 'Distance control system', 'Drop control system', 'Brake assist system']
+    fieldName: 'Safety',
+    validSafetyTypes: [...carProps.safetyTypes]
   },
   comfort: {
-    validComfortTypes: ['Auto Start Stop function', 'Bluetooth / handsfree', 'DVD, TV', 'Steptronic, Tiptronic', 'USB, audio/video, IN/AUX outputs', 'Airmatic', 'Keyless Ignition', 'Differential lock', 'Bordcomputer', 'Fast / slow shifts', 'Light sensor', 'Electronic mirrors', 'Electronic windows', 'Electronic suspension adjustment', 'Electronic seat adjustment', 'Electronic steering wheel amplifer', 'Air condition', 'Climatronic', 'Multifunctional steering wheel', 'Navigation', 'Heating the steering wheel', 'Warming the windscreen', 'Seat heating', 'Adjusting the steering wheel', 'Rain sensor', 'Servo steering wheel amplifer', 'Headlamp wash system', 'Cruise control', 'Stereo', 'Filter for hard particles', 'Cooling glovebox']
+    fieldName: 'Comfort',
+    validComfortTypes: [...carProps.comfortTypes]
   },
   others: {
-    validOtherTypes: ['4x4', '7 seats', 'Buy back', 'Gas system', 'Long base', 'Short base', 'Covered / Sold', 'Crashed', , 'Leasing', 'Methane setup', 'On parts', 'Fully surved', 'New importation', 'With the right to tax', 'With registration', 'Service book', 'Tuning']
+    fieldName: 'Others',
+    validOtherTypes: [...carProps.otherTypes]
   },
   exterior: {
-    validExteriorTypes: ['2(3) Doors', '4(5) Doors', 'LED headlights', 'Xenon headlights', 'Alloy wheels', 'Metalic', 'Heated wipers', 'Panoramic sunroof', 'Riding on the roof', 'Rolls', 'Spoilers', 'Drawbar', 'Halogen headlights', 'Shibadah']
+    fieldName: 'Exterior',
+    validExteriorTypes: [...carProps.exteriorTypes]
   },
   protection: {
-    validProtectionTypes: ['OFROAD package', 'Alarm system', 'Armored', 'Immobilizer', 'Winch', 'Reinforced glass', 'Central locking']
+    fieldName: 'Protection',
+    validProtectionTypes: [...carProps.protectionTypes]
   },
   interior: {
-    validInteriorTypes: ['Suede salon', 'Right hand drive', 'Leather salon']
+    fieldName: 'Interior',
+    validInteriorTypes: [...carProps.interiorTypes]
   },
   specialized: {
-    validSpecializedTypes: ['TAXI', 'For people with disabilities', 'Hearing', 'Ambulance', 'Learning', 'Refrigerated', 'Homologation N1']
+    fieldName: 'Specialized',
+    validSpecializedTypes: [...carProps.specializedTypes]
   }
 }

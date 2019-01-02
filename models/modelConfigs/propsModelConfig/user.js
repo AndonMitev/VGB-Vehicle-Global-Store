@@ -6,7 +6,7 @@ module.exports = {
     fieldName: 'Username',
     minLength: fieldsConfig.minFieldLength(3),
     maxLength: fieldsConfig.maxFieldLength(15),
-    pattern: /^[A-Z]{1}[a-z]{1,}[0-9]{1}$/
+    pattern: /[\w]+/
   },
   email: {
     fieldName: 'Email',
@@ -14,9 +14,9 @@ module.exports = {
   },
   password: {
     fieldName: 'Password',
-    minLength: fieldsConfig.minFieldLength(7),
+    minLength: fieldsConfig.minFieldLength(2),
     maxLength: fieldsConfig.maxFieldLength(16),
-    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/
+    pattern: /[\w]+/
   },
   roles: {
     validRoleTypes: ['Client', 'Manager', 'Admin'],
