@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 require('../models/user');
+require('../models/car');
 
 module.exports = config => {
   mongoose.connect(config.dbPath, {

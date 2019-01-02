@@ -1,32 +1,84 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const userConfiguration = require('../utils/userModelConfiguration');
+
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    validate: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){3,15}$/i,
-    required: [true, 'Username is required'],
-    unique: [true, 'Username is already used'],
-    minlength: [3, 'Username must be at least 3 symbols long'],
-    maxlength: [15, 'Username cannot be more than 15 symbols long'],
+    validate: userConfiguration.username.pattern,
+    required: [true, userConfiguration.username.requiredErrorMsg],
+    unique: [true, userConfiguration.username.uniqueErrorMsg],
+    minlength: [
+      userConfiguration.password.minLength, userConfiguration.password.minLengthErrorMsg
+    ],
+    maxlength: [
+      userConfiguration.password.maxLength,
+      userConfiguration.password.maxLengthErrorMsg
+    ],
   },
   email: {
     type: String,
-    validate: [/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, 'Please provide valid email'],
-    required: [true, 'Email is required'],
-    unique: [true, 'Email is already used'],
+    validate: [
+      userConfiguration.email.pattern,
+      userConfiguration.email.patternErrorMsg
+    ],
+    required: [true, userConfiguration.email.requiredErrorMsg],
+    unique: [true, userConfiguration.email.uniqueErrorMsg],
   },
   password: {
     type: String,
-    validate: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){3,15}$/i,
-    required: [true, 'Password is required'],
-    minlength: [3, 'Password must be at least 3 symbols long'],
-    maxlength: [15, 'Password cannot be more than 15 symbols long'],
+    validate: userConfiguration.password.pattern,
+    required: [true, userConfiguration.password.requiredErrorMsg],
+    minlength: [
+      userConfiguration.password.minLength,
+      userConfiguration.password.minLengthErrorMsg
+    ],
+    maxlength: [
+      userConfiguration.password.maxlength,
+      userConfiguration.password.maxLengthErrorMsg
+    ],
   },
   role: {
     roles: [{ type: String }],
-    enum: ['Client', 'Manager', 'Admin'],
-    default: ['Client']
+    enum: [...userConfiguration.roles.validRoleTypes],
+    default: [userConfiguration.roles.default]
+  },
+  country: {
+    type: String,
+    required: [true, userConfiguration.country.requiredErrorMsg],
+    minlength: [
+      userConfiguration.country.minLength,
+      userConfiguration.country.minLengthErrorMsg
+    ],
+    maxlength: [
+      userConfiguration.country.maxlength,
+      userConfiguration.country.maxLengthErrorMsg
+    ]
+  },
+  region: {
+    type: String,
+    required: [true, userConfiguration.region.requiredErrorMsg],
+    minlength: [
+      userConfiguration.region.minLength,
+      userConfiguration.region.minLengthErrorMsg
+    ],
+    maxlength: [
+      userConfiguration.region.maxlength,
+      userConfiguration.region.maxLengthErrorMsg
+    ]
+  },
+  city: {
+    type: String,
+    required: [true, userConfiguration.city.requiredErrorMsg],
+    minlength: [
+      userConfiguration.city.minLength,
+      userConfiguration.city.minLengthErrorMsg
+    ],
+    maxlength: [
+      userConfiguration.city.maxlength,
+      userConfiguration.city.maxLengthErrorMsg
+    ]
   },
   registeredOn: {
     type: Date,

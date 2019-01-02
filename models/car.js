@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const carConfig = require('../configuration/carModelConfiguration');
+const carConfig = require('../utils/carModelConfiguration');
 
 const CarSchema = new mongoose.Schema({
   brand: {
@@ -52,7 +52,7 @@ const CarSchema = new mongoose.Schema({
   transmission: {
     type: String,
     required: [true, carConfig.transmission.requiredErrorMsg],
-    enum: [...carConfig.carConfig.transmission.validTransmissions]
+    enum: [...carConfig.transmission.validTransmissions]
   },
   category: {
     type: String,
