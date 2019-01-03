@@ -2,42 +2,68 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 const Car = mongoose.model('Car');
 const makeAuth = require('../../middleware/check-auth');
-const propsValidator = require('../../utils/carValidation');
-const commonPropsValidator = require('../../utils/commonPropsValidation');
 const errorHandler = require('../../utils/errorHandler');
-const fixInput = require('../../utils/fixInput');
 const constants = require('./constants');
 const statusCode = require('../statusCodes');
+const carValidation = require('../../utils/car/carValidation');
 
 const addNewCar = async (req, res) => {
-  const failedProps = propsValidator(req.body);
-  const createdBy = mongoose.Types.ObjectId(req.user._id);
-
-  if (failedProps) {
-    return res
-      .status(statusCode.badRequest)
-      .json({ failedProps });
-  }
-
-  const failedCommonProps = commonPropsValidator(req.body);
-
-  if (failedCommonProps) {
-    return res
-      .status(statusCode.badRequest)
-      .json({ failedCommonProps });
-  }
-
-  const fixedData = Object.assign({}, fixInput(req.body), {
-    createdBy
-  });
+  const validCarProps = carValidation(req, res);
+  if (validCarProps.statusCode === 400) return;
 
   try {
-    const createdCar = await Car.create(fixedData);
+    const createdCar = await Car.create(validCarProps);
     return res
       .status(statusCode.created)
       .json({ createdCar });
   } catch (error) {
     errorHandler(error, res);
+  }
+}
+
+const editCar = async (req, res) => {
+  const carId = req.params.id;
+  const userId = req.user._id;
+  const validCarProps = carValidation(req, res);
+
+  if (validCarProps.statusCode === 400) return;
+
+  try {
+    const carToEdit = await Car
+      .findById(carId)
+      .populate(constants.createdBy);
+
+    if (!carToEdit) {
+      return res
+        .status(statusCode.notFound)
+        .json({
+          error,
+          notFound: constants.carNotFound
+        });
+    }
+
+    if (carToEdit.createdBy._id.toString() === userId) {
+      const newVersionOfCar = Object.assign(carToEdit, validCarProps);
+      const editedCar = await newVersionOfCar.save();
+
+      return res
+        .status(statusCode.ok)
+        .json({
+          editedCar,
+          message: constants.successEdited
+        });
+    }
+
+    return res
+      .status(statusCode.forbiden)
+      .json({ message: constants.notCarCreator });
+  } catch (error) {
+    return res
+      .status(statusCode.notFound)
+      .json({
+        error,
+        notFound: constants.carNotFound
+      });
   }
 }
 
@@ -121,8 +147,9 @@ const getDetails = async (req, res) => {
 
 router
   .get(constants.all, getAllCars)
+  .get(constants.details, getDetails)
   .post(constants.add, makeAuth, addNewCar)
   .delete(constants.delete, makeAuth, deleteCar)
-  .get(constants.details, getDetails)
+  .put(constants.edit, makeAuth, editCar);
 
 module.exports = router;

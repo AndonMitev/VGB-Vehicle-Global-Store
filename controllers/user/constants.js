@@ -1,5 +1,8 @@
 module.exports = {
   register: '/regiter',
   login: '/login',
-  invalidCredentials: 'Username or password are incorrect. Please try again.'
+  profile: '/profile/:id',
+  invalidCredentials: 'Username or password are incorrect. Please try again.',
+  notFound: 'User was not found',
+  badRequest: 'Bad Request'
 }

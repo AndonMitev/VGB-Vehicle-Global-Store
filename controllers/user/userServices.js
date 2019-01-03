@@ -11,27 +11,34 @@ const constants = require('./constants');
 const registerUser = async (req, res) => {
   try {
     const failedProps = clientRequestBodyValidation(req.body);
+
     if (failedProps) {
       return res
         .status(statusCode.badRequest)
         .json({ failedProps });
     }
+
     const failedCommonProps = commonPropsValidation(req.body);
+
     if (failedCommonProps) {
       return res
         .status(statusCode.badRequest)
         .json({ failedCommonProps });
     }
+
     const existingUsername = await User.findOne({ username: req.body.username });
     const existingEmail = await User.findOne({ email: req.body.email });
     const errorMessageForExistingUser =
       clientRequestBodyValidation(req.body, existingUsername, existingEmail);
+
     if (errorMessageForExistingUser) {
       return res
         .status(statusCode.badRequest)
         .json({ errorMessageForExistingUser });
     }
+
     const newUser = await User.create(req.body);
+
     return res
       .status(statusCode.created)
       .json(newUser);
@@ -70,8 +77,42 @@ const loginUser = async (req, res) => {
   }
 }
 
+const userProfile = async (req, res) => {
+  const profileId = req.params.id;
+  try {
+
+    const user = await User.findById(profileId);
+
+    if (!user) {
+      return res
+        .status(statusCode.badRequest)
+        .json(
+          {
+            notFound: constants.notFound,
+            message: error
+          }
+        );
+    }
+
+    return res
+      .status(statusCode.ok)
+      .json(user);
+
+  } catch (error) {
+    return res
+      .status(statusCode.badRequest)
+      .json(
+        {
+          notFound: constants.notFound,
+          message: error
+        }
+      );
+  }
+}
+
 router
   .post(constants.register, registerUser)
-  .post(constants.login, loginUser);
+  .post(constants.login, loginUser)
+  .get(constants.profile, userProfile);
 
 module.exports = router;

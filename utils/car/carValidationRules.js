@@ -1,7 +1,7 @@
-const dataConfiguration = require('../models/modelConfigs/propsModelConfig/car');
+const dataConfiguration = require('../../models/modelConfigs/propsModelConfig/car');
 const errorMessages =
-  require('../models/modelConfigs/fieldsValidations/fieldsConfigurations');
-const carValidProps = require('../models/modelConfigs/propsModelConfig/car');
+  require('../../models/modelConfigs/fieldsValidations/fieldsConfigurations');
+const carValidProps = require('../../models/modelConfigs/propsModelConfig/car');
 
 module.exports = clientRequestBody => {
   const {
@@ -20,9 +20,6 @@ module.exports = clientRequestBody => {
     yearOfManufacture,
     mileage,
     color,
-    country,
-    region,
-    city,
     safety,
     comfort,
     others: other,
@@ -33,7 +30,6 @@ module.exports = clientRequestBody => {
   } = clientRequestBody;
 
   // Start Brand
-  // console.log(brand);
   if (!brand) {
     return errorMessages.requiredErrorMsg(dataConfiguration.brand.fieldName);
   }
