@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const Car = mongoose.model('Car');
-const User = mongoose.model('User');
 const makeAuth = require('../../middleware/check-auth');
 const propsValidator = require('../../utils/carValidation');
 const commonPropsValidator = require('../../utils/commonPropsValidation');
 const errorHandler = require('../../utils/errorHandler');
 const fixInput = require('../../utils/fixInput');
+const constants = require('./constants');
+const statusCode = require('../statusCodes');
 
 const addNewCar = async (req, res) => {
   const failedProps = propsValidator(req.body);
@@ -14,7 +15,7 @@ const addNewCar = async (req, res) => {
 
   if (failedProps) {
     return res
-      .status(422)
+      .status(statusCode.badRequest)
       .json({ failedProps });
   }
 
@@ -22,7 +23,7 @@ const addNewCar = async (req, res) => {
 
   if (failedCommonProps) {
     return res
-      .status(422)
+      .status(statusCode.badRequest)
       .json({ failedCommonProps });
   }
 
@@ -33,7 +34,7 @@ const addNewCar = async (req, res) => {
   try {
     const createdCar = await Car.create(fixedData);
     return res
-      .status(201)
+      .status(statusCode.created)
       .json({ createdCar });
   } catch (error) {
     errorHandler(error, res);
@@ -44,15 +45,18 @@ const getAllCars = async (req, res) => {
   try {
     const allCars = await Car
       .find()
-      .sort('-createdAt');
+      .sort(constants.createdAtDescending);
 
     return res
-      .status(200)
+      .status(statusCode.ok)
       .json({ allCars });
   } catch (error) {
     return res
-      .status(404)
-      .json({ error });
+      .status(statusCode.notFound)
+      .json({
+        error,
+        message: constants.carNotFound
+      });
   }
 }
 
@@ -63,25 +67,26 @@ const deleteCar = async (req, res) => {
   try {
     const car = await Car
       .findById(carId)
-      .populate('createdBy');
-    console.log(car.createdBy_id.toString());
-    console.log(userId);
-    console.log(car.createdBy_id.toString() === userId)
-    if (car.createdBy.toString() === userId) {
+      .populate(constants.createdBy);
+
+    if (car.createdBy._id.toString() === userId) {
       await Car.findByIdAndRemove(car._id);
 
       return res
-        .status(200)
-        .json({ success: 'Car was deleted successfull!' })
+        .status(statusCode.ok)
+        .json({ success: constants.successDeleted });
     } else {
       return res
-        .status(403)
-        .json({ message: 'Not allowed' });
+        .status(statusCode.forbiden)
+        .json({ message: constants.notCarCreator });
     }
   } catch (error) {
     return res
-      .status(403)
-      .json({ error });
+      .status(statusCode.notFound)
+      .json({
+        error,
+        message: constants.carNotFound
+      });
   }
 }
 
@@ -91,22 +96,33 @@ const getDetails = async (req, res) => {
   try {
     const car = await Car
       .findById(carId)
-      .populate('createdBy');
+      .populate(constants.createdBy);
+
+    const { brand } = car;
+
+    const relatedCars = await Car
+      .find({ brand });
 
     return res
-      .status(200)
-      .json({ car });
+      .status(statusCode.ok)
+      .json({
+        car,
+        relatedCars,
+      });
   } catch (error) {
     return res
-      .status(403)
-      .json({ error });
+      .status(statusCode.notFound)
+      .json({
+        error,
+        message: constants.carNotFound
+      });
   }
 }
 
 router
-  .get('/all', getAllCars)
-  .post('/add', makeAuth, addNewCar)
-  .delete('/delete/:id', makeAuth, deleteCar)
-  .get('/details/:id', makeAuth, getDetails)
+  .get(constants.all, getAllCars)
+  .post(constants.add, makeAuth, addNewCar)
+  .delete(constants.delete, makeAuth, deleteCar)
+  .get(constants.details, getDetails)
 
 module.exports = router;

@@ -5,20 +5,22 @@ const config = require('../../configuration/config');
 const clientRequestBodyValidation = require('../../utils/userValidation');
 const commonPropsValidation = require('../../utils/commonPropsValidation');
 const errorHandler = require('../../utils/errorHandler');
+const statusCode = require('../statusCodes');
+const constants = require('./constants');
 
 const registerUser = async (req, res) => {
   try {
-    const failedProps = clientRequestBodyValidation(req.body)
+    const failedProps = clientRequestBodyValidation(req.body);
     if (failedProps) {
       return res
-        .status(422)
-        .json({ failedProps })
+        .status(statusCode.badRequest)
+        .json({ failedProps });
     }
     const failedCommonProps = commonPropsValidation(req.body);
     if (failedCommonProps) {
       return res
-        .status(422)
-        .json({ failedCommonProps })
+        .status(statusCode.badRequest)
+        .json({ failedCommonProps });
     }
     const existingUsername = await User.findOne({ username: req.body.username });
     const existingEmail = await User.findOne({ email: req.body.email });
@@ -26,11 +28,13 @@ const registerUser = async (req, res) => {
       clientRequestBodyValidation(req.body, existingUsername, existingEmail);
     if (errorMessageForExistingUser) {
       return res
-        .status(422)
-        .json({ errorMessageForExistingUser })
+        .status(statusCode.badRequest)
+        .json({ errorMessageForExistingUser });
     }
     const newUser = await User.create(req.body);
-    return res.send(JSON.stringify(newUser));
+    return res
+      .status(statusCode.created)
+      .json(newUser);
   } catch (error) {
     errorHandler(error, res);
   }
@@ -41,7 +45,9 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
 
     if (!user) {
-      return res.status(401).json({ message: 'Invalid data' });
+      return res
+        .status(statusCode.unauthorized)
+        .json({ message: constants.invalidCredentials });
     }
 
     user.comparePassword(req.body.password, (err, isMatch) => {
@@ -53,18 +59,19 @@ const loginUser = async (req, res) => {
 
         res.send(JSON.stringify({
           success: true,
-          statusCode: 200,
+          statusCode: statusCode.ok,
           token
         }));
       }
     });
   } catch (error) {
-    console.log(error);
+    return res
+      .status(statusCode.notFound);
   }
 }
 
 router
-  .post('/register', registerUser)
-  .post('/login', loginUser)
+  .post(constants.register, registerUser)
+  .post(constants.login, loginUser);
 
 module.exports = router;
