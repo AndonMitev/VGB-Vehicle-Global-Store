@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const Car = mongoose.model('Car');
-const makeAuth = require('../../middleware/check-auth');
+const requireAuth = require('../../middleware/check-auth');
 const errorHandler = require('../../utils/errorHandler');
 const constants = require('./constants');
 const statusCode = require('../statusCodes');
@@ -148,8 +148,8 @@ const getDetails = async (req, res) => {
 router
   .get(constants.all, getAllCars)
   .get(constants.details, getDetails)
-  .post(constants.add, makeAuth, addNewCar)
-  .delete(constants.delete, makeAuth, deleteCar)
-  .put(constants.edit, makeAuth, editCar);
+  .post(constants.add, requireAuth, addNewCar)
+  .delete(constants.delete, requireAuth, deleteCar)
+  .put(constants.edit, requireAuth, editCar);
 
 module.exports = router;
