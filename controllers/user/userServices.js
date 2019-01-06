@@ -108,11 +108,29 @@ const userProfile = async (req, res) => {
         }
       );
   }
+
+  const allUsers = async (req, res) => {
+    try {
+      const users = await User.find();
+
+      return res
+        .status(statusCode.ok)
+        .json({users});
+    } catch (error) {
+      return res
+        .status(statusCode.badRequest)
+        .json({
+          message: 'Not allowed',
+          error
+        });
+    }
+  }
 }
 
 router
   .post(constants.register, registerUser)
   .post(constants.login, loginUser)
-  .get(constants.profile, userProfile);
+  .get(constants.profile, userProfile)
+  .get(constants.allUsers);
 
 module.exports = router;
