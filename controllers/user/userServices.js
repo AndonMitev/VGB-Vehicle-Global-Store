@@ -80,7 +80,6 @@ const loginUser = async (req, res) => {
 const userProfile = async (req, res) => {
   const profileId = req.params.id;
   try {
-
     const user = await User.findById(profileId);
 
     if (!user) {
@@ -108,22 +107,52 @@ const userProfile = async (req, res) => {
         }
       );
   }
+}
 
-  const allUsers = async (req, res) => {
-    try {
-      const users = await User.find();
+const allUsers = async (req, res) => {
+  try {
+    const users = await User.find();
 
+    return res
+      .status(statusCode.ok)
+      .json({ users });
+  } catch (error) {
+    return res
+      .status(statusCode.badRequest)
+      .json({
+        message: 'Not allowed',
+        error
+      });
+  }
+}
+
+const deleteUser = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findById(userId);
+
+    if(!user) {
       return res
-        .status(statusCode.ok)
-        .json({users});
-    } catch (error) {
-      return res
-        .status(statusCode.badRequest)
-        .json({
-          message: 'Not allowed',
-          error
-        });
+        .status(statusCode.notFound)
+        .json(constants.notFound);
     }
+
+    await User.findByIdAndDelete(userid);
+
+    return res
+      .status(statusCode.ok)
+      .json({
+        message: constants.userWasDeleted
+      });
+
+  } catch(error) {
+    return res
+      .status(statusCode.badRequest)
+      .json({
+        error,
+        message: constants.badRequest
+      });
   }
 }
 
@@ -131,6 +160,7 @@ router
   .post(constants.register, registerUser)
   .post(constants.login, loginUser)
   .get(constants.profile, userProfile)
-  .get(constants.allUsers);
+  .get(constants.allUsers, allUsers)
+  .delete(constants.deleteUser, deleteUser);
 
 module.exports = router;
