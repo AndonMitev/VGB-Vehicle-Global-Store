@@ -145,11 +145,34 @@ const getDetails = async (req, res) => {
   }
 }
 
+const carsByBrand = async(req, res) => {
+  const {params: { brand }} = req;
+
+  try {
+    const carsWithSameBrand = await Car.find({brand});
+    return res
+      .status(statusCode.ok)
+      .json({
+        carsWithSameBrand
+      });
+  } catch (error) {
+    return res
+      .status(statusCode.notFound)
+      .json({
+        message: constants.carNotFound,
+        error
+      });
+  }
+  
+
+}
+
 router
   .get(constants.all, getAllCars)
   .get(constants.details, getDetails)
   .post(constants.add, requireAuth, addNewCar)
   .delete(constants.delete, requireAuth, deleteCar)
-  .put(constants.edit, requireAuth, editCar);
+  .put(constants.edit, requireAuth, editCar)
+  .get(constants.carsByBrand, carsByBrand);
 
 module.exports = router;
