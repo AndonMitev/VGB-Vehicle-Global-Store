@@ -4,7 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'car',
-    loadChildren: './car-store/car.module#CarModule'
+    loadChildren: './components/car-store/car.module#CarModule'
+  },
+  {
+    path: 'authentication',
+    loadChildren: './components/authentication/authentication.module#AuthenticationModule'
   }
 ];
 

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { AllCarsModel } from 'src/app/core/models/car/get-all-cars.model';
+import { AllCarsModel } from 'src/app/core/models/car/get-all-cars';
 
 export const GetAllCarsEffect = 'This will trigger get all cars effect';
 export const SaveAllCarsInStore = 'This will save all cars in store';

@@ -38,10 +38,15 @@ const registerUser = async (req, res) => {
     }
 
     const newUser = await User.create(req.body);
+    const { username, email, registeredOn } = newUser;
 
     return res
       .status(statusCode.created)
-      .json(newUser);
+      .json({
+        username,
+        email,
+        registeredOn
+      });
   } catch (error) {
     errorHandler(error, res);
   }
@@ -63,11 +68,13 @@ const loginUser = async (req, res) => {
           {
             expiresIn: 10080
           })
-
+        const {username, email} = user;
+        const userData = {username, email};
         res.send(JSON.stringify({
           success: true,
           statusCode: statusCode.ok,
-          token
+          token,
+          userData
         }));
       }
     });
@@ -132,7 +139,7 @@ const deleteUser = async (req, res) => {
   try {
     const user = await User.findById(userId);
 
-    if(!user) {
+    if (!user) {
       return res
         .status(statusCode.notFound)
         .json(constants.notFound);
@@ -146,7 +153,7 @@ const deleteUser = async (req, res) => {
         message: constants.userWasDeleted
       });
 
-  } catch(error) {
+  } catch (error) {
     return res
       .status(statusCode.badRequest)
       .json({

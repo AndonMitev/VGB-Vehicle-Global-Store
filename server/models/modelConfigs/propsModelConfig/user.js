@@ -14,8 +14,8 @@ module.exports = {
   },
   password: {
     fieldName: 'Password',
-    minLength: fieldsConfig.minFieldLength(2),
-    maxLength: fieldsConfig.maxFieldLength(16),
+    minLength: fieldsConfig.minFieldLength(3),
+    maxLength: fieldsConfig.maxFieldLength(15),
     pattern: /[\w]+/
   },
   roles: {

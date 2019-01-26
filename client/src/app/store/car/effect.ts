@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { GetAllCarsEffectAction, GetAllCarsEffect, SaveAllCarsAction } from './actions';
+import { GetAllCarsEffectAction, GetAllCarsEffect, SaveAllCarsAction } from './action';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { GetAllCarsService } from 'src/app/core/services/cars/get-all-cars.service';
 import { CarState } from './state';

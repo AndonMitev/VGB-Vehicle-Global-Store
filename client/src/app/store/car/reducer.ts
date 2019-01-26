@@ -1,4 +1,4 @@
-import { CarActionTypes, SaveAllCarsInStore } from './actions';
+import { CarActionTypes, SaveAllCarsInStore } from './action';
 import { CarState } from './state';
 
 const initialState: CarState = {

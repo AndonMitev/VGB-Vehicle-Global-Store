@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CarState } from '../store/car/state';
+import { CarState } from '../../store/car/state';
 import { Store } from '@ngrx/store';
-import { GetAllCarsEffectAction } from '../store/car/actions';
+import { GetAllCarsEffectAction } from '../../store/car/action';
 import { CarsBehavior } from './map-to-view-model';
 
 @Component({

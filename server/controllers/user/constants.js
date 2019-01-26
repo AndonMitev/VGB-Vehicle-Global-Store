@@ -1,5 +1,5 @@
 module.exports = {
-  register: '/regiter',
+  register: '/register',
   login: '/login',
   profile: '/profile/:id',
   allUsers: '/all',

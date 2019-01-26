@@ -1,0 +1,80 @@
+<form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" class="form-control" formControlName="username" />
+    <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+      <span *ngIf="username.errors['required']">Username is required</span>
+      <span *ngIf="username.errors['minlength']">Username min length is 3</span>
+      <span *ngIf="username.errors['maxlength']">Username max length is 15</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" class="form-control" formControlName="password" />
+    <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+      <span *ngIf="password.errors['required']">Password is required</span>
+      <span *ngIf="password.errors['minlength']">Password min length is 3</span>
+      <span *ngIf="password.errors['maxlength']">Password max length is 15</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" />
+    <div class="alert alert-danger" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+      <span *ngIf="confirmPassword.errors['required']">Confirm password is required</span>
+      <span *ngIf="confirmPassword.errors['match']">Passwords do not match</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" class="form-control" formControlName="email" />
+    <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+      <span *ngIf="email.errors['required']">Email is required</span>
+      <span *ngIf="email.errors['email']">Enter valid email</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="confirmEmail">Confirm Email</label>
+    <input type="email" id="confirmEmail" class="form-control" formControlName="confirmEmail" />
+    <div class="alert alert-danger" *ngIf="confirmEmail.invalid && (confirmEmail.dirty || confirmEmail.touched)">
+      <span *ngIf="confirmEmail.errors['required']">Confirm email is required</span>
+      <span *ngIf="confirmEmail.errors['email']">Email do not match</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="country">Country</label>
+    <input type="text" id="country" class="form-control" formControlName="country" />
+    <div class="alert alert-danger" *ngIf="country.invalid && (country.dirty || country.touched)">
+      <span *ngIf="country.errors['required']">Country is required</span>
+      <span *ngIf="country.errors['minlength']">Country min length is 2</span>
+      <span *ngIf="country.errors['maxlength']">Country max length is 20</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="region">Region</label>
+    <input type="text" id="region" class="form-control" formControlName="region" />
+    <div class="alert alert-danger" *ngIf="region.invalid && (region.dirty || region.touched)">
+      <span *ngIf="region.errors['required']">Region is required</span>
+      <span *ngIf="region.errors['minlength']">Region min length is 2</span>
+      <span *ngIf="region.errors['maxlength']">Region max length is 20</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="city">City</label>
+    <input type="text" id="city" class="form-control" formControlName="city" />
+    <div class="alert alert-danger" *ngIf="city.invalid && (city.dirty || city.touched)">
+      <span *ngIf="city.errors['required']">City is required</span>
+      <span *ngIf="city.errors['minlength']">City min length is 2</span>
+      <span *ngIf="city.errors['maxlength']">City max length is 20</span>
+    </div>
+  </div>
+
+  <button [disabled]="registerForm.invalid" class="btn btn-primary float-right" type="submit">Register</button>
+</form>

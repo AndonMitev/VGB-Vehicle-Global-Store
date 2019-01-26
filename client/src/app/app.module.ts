@@ -7,7 +7,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './components/shared/shared.module';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 
 @NgModule({
