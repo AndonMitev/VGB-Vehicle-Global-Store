@@ -72,10 +72,17 @@ const getAllCars = async (req, res) => {
     const allCars = await Car
       .find()
       .sort(constants.createdAtDescending);
-
+  
+    const carSelectedProps = allCars.map(car => ({
+      brand: car.brand,
+      model: car.model,
+      yearOfManufacture: car.yearOfManufacture,
+      price: car.price,
+      city: car.city
+    }));
     return res
       .status(statusCode.ok)
-      .json({ allCars });
+      .json({ carSelectedProps });
   } catch (error) {
     return res
       .status(statusCode.notFound)
