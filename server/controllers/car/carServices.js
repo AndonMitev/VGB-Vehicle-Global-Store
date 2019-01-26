@@ -69,11 +69,11 @@ const editCar = async (req, res) => {
 
 const getAllCars = async (req, res) => {
   try {
-    const allCars = await Car
+    const allCarsWithFullProps = await Car
       .find()
       .sort(constants.createdAtDescending);
   
-    const carSelectedProps = allCars.map(car => ({
+    const allCars = allCarsWithFullProps.map(car => ({
       brand: car.brand,
       model: car.model,
       yearOfManufacture: car.yearOfManufacture,
@@ -82,7 +82,7 @@ const getAllCars = async (req, res) => {
     }));
     return res
       .status(statusCode.ok)
-      .json({ carSelectedProps });
+      .json({ allCars });
   } catch (error) {
     return res
       .status(statusCode.notFound)

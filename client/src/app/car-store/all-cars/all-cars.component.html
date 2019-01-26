@@ -1,4 +1,11 @@
-
-<div>
-  {{carData | json}}
+<div class="card">
+  <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+  <div class="card-body">
+    <h4 class="card-title">{{carData.brand}}</h4>
+    <p class="card-text">Model: {{carData.model}}</p>
+    <p class="card-text">Price: {{carData.price | currency}}</p>
+    <p class="card-text">Year: {{carData.yearOfManufacture}}</p>
+    <p class="card-text">City: {{carData.city}}</p>
+    <button class="btn btn-primary">Go somewhere</button>
+  </div>
 </div>

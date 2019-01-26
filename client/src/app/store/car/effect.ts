@@ -5,7 +5,6 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { GetAllCarsService } from 'src/app/core/services/cars/get-all-cars.service';
 import { CarState } from './state';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,10 @@ export class CarEffects {
       ofType<GetAllCarsEffectAction>(GetAllCarsEffect),
       switchMap(() => this.carService.getAllCars()
         .pipe(
-          map(response => new SaveAllCarsAction(response)),
+          map(response => {
+            const allCars = response['allCars'];
+            return new SaveAllCarsAction(allCars);
+          }),
         )
       )
     )

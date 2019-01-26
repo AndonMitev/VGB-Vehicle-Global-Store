@@ -1,7 +1,6 @@
 import { CarActionTypes, SaveAllCarsInStore } from './actions';
 import { CarState } from './state';
 
-
 const initialState: CarState = {
   allCars: []
 };

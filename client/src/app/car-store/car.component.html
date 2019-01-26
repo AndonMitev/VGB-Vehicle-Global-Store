@@ -1,3 +1,15 @@
-<div *ngIf="(allCars | async) as cars">
-  <app-all-cars [carData]="cars"></app-all-cars>
+<div *ngIf="(carsBehavior.allCarsModel$ | async) as cars">
+  <app-search-bar></app-search-bar>
+  <div class="row">
+    <div class="col-md-3 text-center">
+      Add side Bar
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-6 mb-3" *ngFor="let car of cars">
+          <app-all-cars [carData]="car"></app-all-cars>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,5 @@
+import { AllCarsModel } from 'src/app/core/models/car/get-all-cars.model';
+
 export class CarState {
-  static stateName: string = 'CarState';
-  allCars: []
+  allCars: AllCarsModel[]
 }
