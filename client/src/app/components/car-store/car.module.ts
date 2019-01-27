@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AllCarsComponent } from './car/cars/all-cars/all-cars.component';
+import { AllCarsComponent } from './cars/all-cars/all-cars.component';
 import { CarRoutingModule } from './car-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { carReducer } from '../../store/car/reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { CarEffects } from '../../store/car/effect';
-import { CarComponent } from './car/cars/car.component';
+import { CarComponent } from './cars/car.component';
 import { SharedModule } from '../shared/shared.module';
-import { CarFormComponent } from './car/car-form/car-formcomponent';
+import { CarFormComponent } from './create-car/car-form/car-form.component';
 import { CreateCarComponent } from './create-car/create-car.component';
 
 @NgModule({
