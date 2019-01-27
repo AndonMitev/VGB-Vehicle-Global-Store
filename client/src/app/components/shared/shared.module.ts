@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     FormsModule
   ],
-  declarations: [NavbarComponent, SearchBarComponent],
-  exports: [NavbarComponent, SearchBarComponent]
+  declarations: [NavbarComponent],
+  exports: [NavbarComponent]
 })
 export class SharedModule { }

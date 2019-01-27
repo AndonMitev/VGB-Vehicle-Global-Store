@@ -8,17 +8,24 @@ import { carReducer } from '../../store/car/reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { CarEffects } from '../../store/car/effect';
 import { CarComponent } from './cars/car.component';
-import { SharedModule } from '../shared/shared.module';
 import { CarFormComponent } from './create-car/car-form/car-form.component';
 import { CreateCarComponent } from './create-car/create-car.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SearchBarModule } from '../shared/search-bar/search-bar.module';
 
 @NgModule({
-  declarations: [AllCarsComponent, CarComponent, CarFormComponent, CreateCarComponent],
+  declarations: [
+    CarComponent,
+    AllCarsComponent,
+    CreateCarComponent,
+    CarFormComponent,
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
     CarRoutingModule,
-    SharedModule,
+    SearchBarModule,
+    ReactiveFormsModule,
     StoreModule.forFeature('cars', carReducer),
     EffectsModule.forFeature([CarEffects])
   ],

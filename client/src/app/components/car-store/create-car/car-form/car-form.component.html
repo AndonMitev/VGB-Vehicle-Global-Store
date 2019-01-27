@@ -1,3 +1,207 @@
-<p>
-  create-car works!
-</p>
+<form [formGroup]="createCarForm" (ngSubmit)="submitCarForm()">
+  <div class="row">
+    <div class="form-group  col-md-4">
+      <label for="brand">Brand</label>
+      <input type="text" class="form-control" formControlName="brand" id="brand" />
+    </div>
+
+    <div class="form-group  col-md-4">
+      <label for="model">Model</label>
+      <input type="text" class="form-control" formControlName="model" id="model" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="modification">Modification</label>
+      <input type="text" class="form-control" formControlName="modification" id="modification" />
+    </div>
+
+
+
+    <div class="form-group  col-md-4">
+      <label for="horsePower">Horse power</label>
+      <input type="text" class="form-control" formControlName="horsePower" id="horsePower" />
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label for="price">Price</label>
+      <input type="text" class="form-control" formControlName="price" id="price" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="yearOfManufacture">Year of manufacture</label>
+      <input type="text" class="form-control" formControlName="yearOfManufacture" id="yearOfManufacture" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="mileage">Mileage</label>
+      <input type="text" class="form-control" formControlName="mileage" id="mileage" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="mileage">Mileage</label>
+      <input type="text" class="form-control" formControlName="mileage" id="mileage" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="country">Country</label>
+      <input type="text" class="form-control" formControlName="country" id="country" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="region">Region</label>
+      <input type="text" class="form-control" formControlName="region" id="region" />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="city">City</label>
+      <input type="text" class="form-control" formControlName="city" id="city" />
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label>
+        <strong>Engine</strong>
+      </label>
+      <select class="form-control" formControlName="engine">
+        <option *ngFor="let engine of carProps.engineTypes" [value]="engine">{{engine}}</option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label>
+        <strong>Condition</strong>
+      </label>
+      <select class="form-control" formControlName="condition">
+        <option *ngFor="let conditionType of carProps.conditionTypes" [value]="conditionType">{{conditionType}}</option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label>
+        <strong>Euro Standard</strong>
+      </label>
+      <select class="form-control" formControlName="euroStandart">
+        <option *ngFor="let euroStandart of carProps.euroStandartsTypes" [value]="euroStandart">{{euroStandart}}</option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label>
+        <strong>Transmission</strong>
+      </label>
+      <select class="form-control" formControlName="transmission">
+        <option *ngFor="let transmission of carProps.transmissionTypes" [value]="transmission">{{transmission}}</option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label>
+        <strong>Category</strong>
+      </label>
+      <select class="form-control" formControlName="category">
+        <option *ngFor="let category of carProps.categoryTypes" [value]="category">{{category}}</option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label>
+        <strong>Currency</strong>
+      </label>
+      <select class="form-control" formControlName="currency">
+        <option *ngFor="let currency of carProps.currencyTypes" [value]="currency">{{currency}}</option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label>
+        <strong>Month of manufacture</strong>
+      </label>
+      <select class="form-control" formControlName="monthOfManufacture">
+        <option *ngFor="let monthOfManufacture of carProps.monthTypes" [value]="monthOfManufacture">{{monthOfManufacture}}</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label>
+        <strong>Safety</strong>
+      </label>
+      <div *ngFor="let safety of carProps.safetyTypes" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" [id]="safety">
+        <label class="custom-control-label" [for]="safety">{{safety}}</label>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 form-group">
+      <label>
+        <strong>Exterior</strong>
+      </label>
+      <div *ngFor="let exterior of carProps.exteriorTypes" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" [id]="exterior">
+        <label class="custom-control-label" [for]="exterior">{{exterior}}</label>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 form-group">
+      <label>
+        <strong>Others</strong>
+      </label>
+      <div *ngFor="let other of carProps.otherTypes" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" [id]="other">
+        <label class="custom-control-label" [for]="other">{{other}}</label>
+      </div>
+    </div>
+
+    <div class="col-md-4 form-group">
+      <label>
+        <strong>Protection</strong>
+      </label>
+      <div *ngFor="let protection of carProps.protectionTypes" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" [id]="protection">
+        <label class="custom-control-label" [for]="protection">{{protection}}</label>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 form-group">
+      <label>
+        <strong>Interior</strong>
+      </label>
+      <div *ngFor="let interior of carProps.interiorTypes" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" [id]="interior">
+        <label class="custom-control-label" [for]="interior">{{interior}}</label>
+      </div>
+    </div>
+
+    <div class="col-md-4 form-group">
+      <label>
+        <strong>Specialized</strong>
+      </label>
+      <div *ngFor="let specialized of carProps.specializedTypes" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" [id]="specialized">
+        <label class="custom-control-label" [for]="specialized">{{specialized}}</label>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 form-group">
+      <label>
+        <strong>Comfort</strong>
+      </label>
+      <div *ngFor="let comfort of carProps.comfortTypes" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" [id]="comfort">
+        <label class="custom-control-label" [for]="comfort">{{comfort}}</label>
+      </div>
+    </div>
+
+  </div>
+  <button class="btn btn-primary float-right">Create</button>
+</form>
