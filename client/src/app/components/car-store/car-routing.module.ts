@@ -6,6 +6,8 @@ const routes: Routes = [
   {
     path: 'all',
     component: CarComponent
+  }, {
+    
   }
 ];
 
